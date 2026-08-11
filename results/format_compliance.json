@@ -1,0 +1,245 @@
+{
+  "base": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 394,
+      "parse_rate": 0.985
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 198,
+      "parse_rate": 0.99
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 192,
+      "parse_rate": 0.96
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 191,
+      "parse_rate": 0.955
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 63,
+      "parse_rate": 0.2625
+    }
+  },
+  "tuned": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 400,
+      "parse_rate": 1.0
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 196,
+      "parse_rate": 0.8166666666666667
+    }
+  },
+  "tuned_refusal": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 399,
+      "parse_rate": 0.9975
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 76,
+      "parse_rate": 0.31666666666666665
+    }
+  },
+  "tuned_fixed": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 400,
+      "parse_rate": 1.0
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 199,
+      "parse_rate": 0.995
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 75,
+      "parse_rate": 0.3125
+    }
+  },
+  "tuned_s20260809": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 399,
+      "parse_rate": 0.9975
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 179,
+      "parse_rate": 0.7458333333333333
+    }
+  },
+  "tuned_s20260810": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 400,
+      "parse_rate": 1.0
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 196,
+      "parse_rate": 0.8166666666666667
+    }
+  },
+  "tuned_s20260811": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 399,
+      "parse_rate": 0.9975
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 216,
+      "parse_rate": 0.9
+    }
+  },
+  "tuned_fixed_s20260810": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 400,
+      "parse_rate": 1.0
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 82,
+      "parse_rate": 0.3416666666666667
+    }
+  },
+  "tuned_fixed_s20260811": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 399,
+      "parse_rate": 0.9975
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 84,
+      "parse_rate": 0.35
+    }
+  }
+}

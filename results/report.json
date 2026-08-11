@@ -1,0 +1,960 @@
+{
+  "comparisons": {
+    "base_vs_tuned": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.7375,
+          "low": 0.678406,
+          "high": 0.789111
+        },
+        "tuned": {
+          "point": 0.183333,
+          "low": 0.1395,
+          "high": 0.237144
+        },
+        "delta": {
+          "point": -0.554167,
+          "low": -0.616667,
+          "high": -0.491667
+        },
+        "mcnemar": {
+          "gained": 0,
+          "lost": 133,
+          "discordant": 133,
+          "p_value": 1.8367099231598242e-40
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.81,
+          "low": 0.749988,
+          "high": 0.858328
+        },
+        "tuned": {
+          "point": 0.895,
+          "low": 0.84482,
+          "high": 0.930293
+        },
+        "delta": {
+          "point": 0.085,
+          "low": 0.04,
+          "high": 0.135
+        },
+        "mcnemar": {
+          "gained": 21,
+          "lost": 4,
+          "discordant": 25,
+          "p_value": 0.0009105205535888672
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.64,
+          "low": 0.571415,
+          "high": 0.703308
+        },
+        "tuned": {
+          "point": 0.72,
+          "low": 0.654077,
+          "high": 0.777631
+        },
+        "delta": {
+          "point": 0.08,
+          "low": 0.02,
+          "high": 0.145
+        },
+        "mcnemar": {
+          "gained": 29,
+          "lost": 13,
+          "discordant": 42,
+          "p_value": 0.019520472782460274
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.56,
+          "low": 0.490717,
+          "high": 0.627022
+        },
+        "tuned": {
+          "point": 0.58,
+          "low": 0.510721,
+          "high": 0.646264
+        },
+        "delta": {
+          "point": 0.02,
+          "low": -0.055,
+          "high": 0.09
+        },
+        "mcnemar": {
+          "gained": 30,
+          "lost": 26,
+          "discordant": 56,
+          "p_value": 0.6888797607233396
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "tuned": {
+          "point": 0.855,
+          "low": 0.817117,
+          "high": 0.88613
+        },
+        "delta": {
+          "point": 0.02,
+          "low": -0.0125,
+          "high": 0.0525
+        },
+        "mcnemar": {
+          "gained": 28,
+          "lost": 20,
+          "discordant": 48,
+          "p_value": 0.31232680747326924
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.73629,
+          "low": 0.711062,
+          "high": 0.760059
+        },
+        "tuned": {
+          "point": 0.665323,
+          "low": 0.638583,
+          "high": 0.691041
+        },
+        "delta": {
+          "point": -0.070968,
+          "low": -0.098387,
+          "high": -0.042742
+        },
+        "mcnemar": {
+          "gained": 108,
+          "lost": 196,
+          "discordant": 304,
+          "p_value": 5.07408898163858e-07
+        }
+      }
+    ],
+    "base_vs_tuned_refusal": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.7375,
+          "low": 0.678406,
+          "high": 0.789111
+        },
+        "tuned": {
+          "point": 0.683333,
+          "low": 0.621987,
+          "high": 0.738903
+        },
+        "delta": {
+          "point": -0.054167,
+          "low": -0.095833,
+          "high": -0.0125
+        },
+        "mcnemar": {
+          "gained": 6,
+          "lost": 19,
+          "discordant": 25,
+          "p_value": 0.01463329792022705
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.81,
+          "low": 0.749988,
+          "high": 0.858328
+        },
+        "tuned": {
+          "point": 0.93,
+          "low": 0.885945,
+          "high": 0.957848
+        },
+        "delta": {
+          "point": 0.12,
+          "low": 0.07,
+          "high": 0.17
+        },
+        "mcnemar": {
+          "gained": 27,
+          "lost": 3,
+          "discordant": 30,
+          "p_value": 8.430331945419312e-06
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.64,
+          "low": 0.571415,
+          "high": 0.703308
+        },
+        "tuned": {
+          "point": 0.765,
+          "low": 0.701586,
+          "high": 0.818426
+        },
+        "delta": {
+          "point": 0.125,
+          "low": 0.06,
+          "high": 0.19
+        },
+        "mcnemar": {
+          "gained": 36,
+          "lost": 11,
+          "discordant": 47,
+          "p_value": 0.000346001140314911
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.56,
+          "low": 0.490717,
+          "high": 0.627022
+        },
+        "tuned": {
+          "point": 0.605,
+          "low": 0.535883,
+          "high": 0.670159
+        },
+        "delta": {
+          "point": 0.045,
+          "low": -0.03,
+          "high": 0.12
+        },
+        "mcnemar": {
+          "gained": 34,
+          "lost": 25,
+          "discordant": 59,
+          "p_value": 0.2975952082844287
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "tuned": {
+          "point": 0.875,
+          "low": 0.838981,
+          "high": 0.903885
+        },
+        "delta": {
+          "point": 0.04,
+          "low": 0.0075,
+          "high": 0.0725
+        },
+        "mcnemar": {
+          "gained": 32,
+          "lost": 16,
+          "discordant": 48,
+          "p_value": 0.0293049467205293
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.73629,
+          "low": 0.711062,
+          "high": 0.760059
+        },
+        "tuned": {
+          "point": 0.785484,
+          "low": 0.761773,
+          "high": 0.807431
+        },
+        "delta": {
+          "point": 0.049194,
+          "low": 0.026613,
+          "high": 0.071774
+        },
+        "mcnemar": {
+          "gained": 135,
+          "lost": 74,
+          "discordant": 209,
+          "p_value": 2.941225313409726e-05
+        }
+      }
+    ],
+    "base_vs_tuned_fixed": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.7375,
+          "low": 0.678406,
+          "high": 0.789111
+        },
+        "tuned": {
+          "point": 0.6875,
+          "low": 0.626294,
+          "high": 0.742799
+        },
+        "delta": {
+          "point": -0.05,
+          "low": -0.091667,
+          "high": -0.0125
+        },
+        "mcnemar": {
+          "gained": 6,
+          "lost": 18,
+          "discordant": 24,
+          "p_value": 0.022655844688415527
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.81,
+          "low": 0.749988,
+          "high": 0.858328
+        },
+        "tuned": {
+          "point": 0.885,
+          "low": 0.833353,
+          "high": 0.922136
+        },
+        "delta": {
+          "point": 0.075,
+          "low": 0.025,
+          "high": 0.125
+        },
+        "mcnemar": {
+          "gained": 22,
+          "lost": 7,
+          "discordant": 29,
+          "p_value": 0.008130058646202087
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.64,
+          "low": 0.571415,
+          "high": 0.703308
+        },
+        "tuned": {
+          "point": 0.71,
+          "low": 0.643625,
+          "high": 0.76846
+        },
+        "delta": {
+          "point": 0.07,
+          "low": 0.01,
+          "high": 0.13
+        },
+        "mcnemar": {
+          "gained": 26,
+          "lost": 12,
+          "discordant": 38,
+          "p_value": 0.03355243967962451
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.56,
+          "low": 0.490717,
+          "high": 0.627022
+        },
+        "tuned": {
+          "point": 0.55,
+          "low": 0.480756,
+          "high": 0.617359
+        },
+        "delta": {
+          "point": -0.01,
+          "low": -0.09,
+          "high": 0.07
+        },
+        "mcnemar": {
+          "gained": 32,
+          "lost": 34,
+          "discordant": 66,
+          "p_value": 0.9021585000966993
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "tuned": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "delta": {
+          "point": 0.0,
+          "low": -0.0375,
+          "high": 0.0375
+        },
+        "mcnemar": {
+          "gained": 29,
+          "lost": 29,
+          "discordant": 58,
+          "p_value": 1.0
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.73629,
+          "low": 0.711062,
+          "high": 0.760059
+        },
+        "tuned": {
+          "point": 0.748387,
+          "low": 0.723492,
+          "high": 0.771748
+        },
+        "delta": {
+          "point": 0.012097,
+          "low": -0.01129,
+          "high": 0.035484
+        },
+        "mcnemar": {
+          "gained": 115,
+          "lost": 100,
+          "discordant": 215,
+          "p_value": 0.3397005675342433
+        }
+      }
+    ],
+    "tuned_vs_tuned_refusal": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.183333,
+          "low": 0.1395,
+          "high": 0.237144
+        },
+        "tuned": {
+          "point": 0.683333,
+          "low": 0.621987,
+          "high": 0.738903
+        },
+        "delta": {
+          "point": 0.5,
+          "low": 0.4375,
+          "high": 0.5625
+        },
+        "mcnemar": {
+          "gained": 120,
+          "lost": 0,
+          "discordant": 120,
+          "p_value": 1.504632769052528e-36
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.895,
+          "low": 0.84482,
+          "high": 0.930293
+        },
+        "tuned": {
+          "point": 0.93,
+          "low": 0.885945,
+          "high": 0.957848
+        },
+        "delta": {
+          "point": 0.035,
+          "low": 0.01,
+          "high": 0.065
+        },
+        "mcnemar": {
+          "gained": 8,
+          "lost": 1,
+          "discordant": 9,
+          "p_value": 0.0390625
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.72,
+          "low": 0.654077,
+          "high": 0.777631
+        },
+        "tuned": {
+          "point": 0.765,
+          "low": 0.701586,
+          "high": 0.818426
+        },
+        "delta": {
+          "point": 0.045,
+          "low": 0.01,
+          "high": 0.08
+        },
+        "mcnemar": {
+          "gained": 11,
+          "lost": 2,
+          "discordant": 13,
+          "p_value": 0.0224609375
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.58,
+          "low": 0.510721,
+          "high": 0.646264
+        },
+        "tuned": {
+          "point": 0.605,
+          "low": 0.535883,
+          "high": 0.670159
+        },
+        "delta": {
+          "point": 0.025,
+          "low": -0.025,
+          "high": 0.08
+        },
+        "mcnemar": {
+          "gained": 17,
+          "lost": 12,
+          "discordant": 29,
+          "p_value": 0.45825831964612007
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.855,
+          "low": 0.817117,
+          "high": 0.88613
+        },
+        "tuned": {
+          "point": 0.875,
+          "low": 0.838981,
+          "high": 0.903885
+        },
+        "delta": {
+          "point": 0.02,
+          "low": 0.0025,
+          "high": 0.04
+        },
+        "mcnemar": {
+          "gained": 12,
+          "lost": 4,
+          "discordant": 16,
+          "p_value": 0.076812744140625
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.665323,
+          "low": 0.638583,
+          "high": 0.691041
+        },
+        "tuned": {
+          "point": 0.785484,
+          "low": 0.761773,
+          "high": 0.807431
+        },
+        "delta": {
+          "point": 0.120161,
+          "low": 0.099194,
+          "high": 0.140323
+        },
+        "mcnemar": {
+          "gained": 168,
+          "lost": 19,
+          "discordant": 187,
+          "p_value": 5.355420111346468e-31
+        }
+      }
+    ],
+    "tuned_vs_tuned_fixed": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.183333,
+          "low": 0.1395,
+          "high": 0.237144
+        },
+        "tuned": {
+          "point": 0.6875,
+          "low": 0.626294,
+          "high": 0.742799
+        },
+        "delta": {
+          "point": 0.504167,
+          "low": 0.441667,
+          "high": 0.566667
+        },
+        "mcnemar": {
+          "gained": 121,
+          "lost": 0,
+          "discordant": 121,
+          "p_value": 7.52316384526264e-37
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.895,
+          "low": 0.84482,
+          "high": 0.930293
+        },
+        "tuned": {
+          "point": 0.885,
+          "low": 0.833353,
+          "high": 0.922136
+        },
+        "delta": {
+          "point": -0.01,
+          "low": -0.05,
+          "high": 0.025
+        },
+        "mcnemar": {
+          "gained": 6,
+          "lost": 8,
+          "discordant": 14,
+          "p_value": 0.79052734375
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.72,
+          "low": 0.654077,
+          "high": 0.777631
+        },
+        "tuned": {
+          "point": 0.71,
+          "low": 0.643625,
+          "high": 0.76846
+        },
+        "delta": {
+          "point": -0.01,
+          "low": -0.055,
+          "high": 0.03
+        },
+        "mcnemar": {
+          "gained": 8,
+          "lost": 10,
+          "discordant": 18,
+          "p_value": 0.8145294189453125
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.58,
+          "low": 0.510721,
+          "high": 0.646264
+        },
+        "tuned": {
+          "point": 0.55,
+          "low": 0.480756,
+          "high": 0.617359
+        },
+        "delta": {
+          "point": -0.03,
+          "low": -0.09,
+          "high": 0.03
+        },
+        "mcnemar": {
+          "gained": 17,
+          "lost": 23,
+          "discordant": 40,
+          "p_value": 0.42959050784338615
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.855,
+          "low": 0.817117,
+          "high": 0.88613
+        },
+        "tuned": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "delta": {
+          "point": -0.02,
+          "low": -0.0425,
+          "high": 0.0025
+        },
+        "mcnemar": {
+          "gained": 6,
+          "lost": 14,
+          "discordant": 20,
+          "p_value": 0.11531829833984375
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.665323,
+          "low": 0.638583,
+          "high": 0.691041
+        },
+        "tuned": {
+          "point": 0.748387,
+          "low": 0.723492,
+          "high": 0.771748
+        },
+        "delta": {
+          "point": 0.083065,
+          "low": 0.060484,
+          "high": 0.105645
+        },
+        "mcnemar": {
+          "gained": 158,
+          "lost": 55,
+          "discordant": 213,
+          "p_value": 9.888840801155172e-13
+        }
+      }
+    ],
+    "tuned_refusal_vs_tuned_fixed": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.683333,
+          "low": 0.621987,
+          "high": 0.738903
+        },
+        "tuned": {
+          "point": 0.6875,
+          "low": 0.626294,
+          "high": 0.742799
+        },
+        "delta": {
+          "point": 0.004167,
+          "low": -0.025,
+          "high": 0.033333
+        },
+        "mcnemar": {
+          "gained": 7,
+          "lost": 6,
+          "discordant": 13,
+          "p_value": 1.0
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.93,
+          "low": 0.885945,
+          "high": 0.957848
+        },
+        "tuned": {
+          "point": 0.885,
+          "low": 0.833353,
+          "high": 0.922136
+        },
+        "delta": {
+          "point": -0.045,
+          "low": -0.08,
+          "high": -0.015
+        },
+        "mcnemar": {
+          "gained": 2,
+          "lost": 11,
+          "discordant": 13,
+          "p_value": 0.0224609375
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.765,
+          "low": 0.701586,
+          "high": 0.818426
+        },
+        "tuned": {
+          "point": 0.71,
+          "low": 0.643625,
+          "high": 0.76846
+        },
+        "delta": {
+          "point": -0.055,
+          "low": -0.095,
+          "high": -0.015
+        },
+        "mcnemar": {
+          "gained": 3,
+          "lost": 14,
+          "discordant": 17,
+          "p_value": 0.012725830078125
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.605,
+          "low": 0.535883,
+          "high": 0.670159
+        },
+        "tuned": {
+          "point": 0.55,
+          "low": 0.480756,
+          "high": 0.617359
+        },
+        "delta": {
+          "point": -0.055,
+          "low": -0.12,
+          "high": 0.005
+        },
+        "mcnemar": {
+          "gained": 15,
+          "lost": 26,
+          "discordant": 41,
+          "p_value": 0.11727520595741225
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.875,
+          "low": 0.838981,
+          "high": 0.903885
+        },
+        "tuned": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "delta": {
+          "point": -0.04,
+          "low": -0.065,
+          "high": -0.0175
+        },
+        "mcnemar": {
+          "gained": 3,
+          "lost": 19,
+          "discordant": 22,
+          "p_value": 0.0008554458618164062
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.785484,
+          "low": 0.761773,
+          "high": 0.807431
+        },
+        "tuned": {
+          "point": 0.748387,
+          "low": 0.723492,
+          "high": 0.771748
+        },
+        "delta": {
+          "point": -0.037097,
+          "low": -0.054032,
+          "high": -0.020968
+        },
+        "mcnemar": {
+          "gained": 30,
+          "lost": 76,
+          "discordant": 106,
+          "p_value": 9.102659374333861e-06
+        }
+      }
+    ]
+  },
+  "training_cost": {
+    "qwen2.5-1.5b-toolace-fixed-qlora": {
+      "train_file": "train_fixed.jsonl",
+      "train_composition": {
+        "call": 3720,
+        "refusal": 1200
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 4917,
+      "train_runtime_min": 46.47,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.07999103975489857,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-toolace-qlora": {
+      "train_file": "train.jsonl",
+      "train_composition": null,
+      "pad_multiple": 0,
+      "eval_strategy": "steps",
+      "train_rows": 4916,
+      "train_runtime_min": 54.25,
+      "peak_vram_gib": 5.91,
+      "final_train_loss": 0.05582284011491915,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-toolace-refusal-qlora": {
+      "train_file": "train_mixed.jsonl",
+      "train_composition": {
+        "call": 4920,
+        "refusal": 1200
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 6116,
+      "train_runtime_min": 81.97,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.07514396500743292,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    }
+  }
+}

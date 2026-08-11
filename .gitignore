@@ -1,0 +1,19 @@
+# Environments and caches (~13 GB)
+.venv/
+.venv-bfcl/
+hf_cache/
+pip_cache/
+__pycache__/
+*.pyc
+
+# Derived data. Regenerable from the scripts, and redistributing a reshaped copy
+# of ToolACE / BFCL here would muddy their licensing.
+data/
+prompts/
+
+# Training artifacts: LoRA adapters (~70 MB each) and optimizer checkpoints.
+# Only the cost/config summaries are kept, since those are results.
+runs/*/*
+!runs/*/train_summary.json
+
+# Scored outcomes and reports ARE kept (results/), they are the point.
