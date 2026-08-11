@@ -177,6 +177,7 @@ never be allowed to renegotiate the torch build verified on this GPU.
 .venv-bfcl   04_evaluate.py       BFCL's own AST checker -> per-item 0/1
 .venv-bfcl   05_report.py         Wilson / paired bootstrap / McNemar -> tables
 .venv-bfcl   06_multiseed_report.py  per-seed + pooled replication of ablation B
+.venv-bfcl   07_shortcut_probe.py    did refusal training learn a lexical rule?
 ```
 
 ## Results
@@ -375,6 +376,50 @@ Two consequences for how the headline numbers should be read:
   (+7.08%), moved by less than half that arm's own seed-to-seed range, so it is
   not separable from noise.
 
+### Did it learn judgement, or a lexical shortcut?
+
+The refusal builder only accepts a cross-paired example when the offered tool
+names share **zero** word tokens with the request. That filter prevents
+serviceable pairs from being mislabelled as refusals — a false refusal label
+would teach the model to decline things it can do — but it has a side effect:
+every refusal the model saw had disjoint vocabulary. A model can fit that
+signal perfectly without learning anything about applicability, by learning
+*"tool words and request words don't overlap → don't call"*.
+
+If it learned that rule, it should over-refuse on tasks whose vocabulary happens
+not to overlap but where calling is still correct. BFCL's call categories
+already contain 86 such tasks, and every model's outputs on them are already
+scored, so this costs no new training. The diagnostic is **call emission rate**
+— did the model produce a parseable call at all — not accuracy, since accuracy
+conflates "declined when it should have called" with "called the wrong thing".
+
+| arm | disjoint (n=86) | overlapping (n=914) | gap |
+|---|---|---|---|
+| calls-only (control, 4 models) | 100.00% | 99.89–100% | +0.05% |
+| refusal-trained (4 models) | **100.00%** | 99.89–100% | +0.08% |
+
+**Excess gap attributable to refusal training: +0.03%.** Not one of the four
+refusal-trained models declined a single disjoint call task. Paired at matched
+seed, the emission delta is +0/−0 at p=1. The lexical shortcut is not what they
+learned.
+
+The control arm is what makes this readable: it never saw a refusal, so its
+bucket gap is a property of the tasks. Only the excess implicates training.
+
+**What this does not show.** BFCL's "disjoint" means disjoint *tokens*; the
+tool is often still obviously related in meaning (`get_weather` against "will I
+need an umbrella"). The refusals in training were semantically unrelated
+(traffic lookup against Japanese tax rates). So this rules out the crudest
+shortcut and says nothing about the middle ground — a tool that roughly fits but
+lacks a required parameter, or that serves a near-variant of what was asked.
+BFCL has no such category, and the safety claim here is correspondingly narrower
+than "the model understands applicability".
+
+One mechanism note in passing: emission rate on call tasks sits at ~100% for
+every refusal-trained model. Whatever else they learned, **they did not become
+reluctant to call** — behavioural support for the statistical finding that no
+capability cost is detectable.
+
 ### What none of them fixed
 
 Runs 2 and 3 are still **−5.42%** and **−5.00%** below base on irrelevance
@@ -436,8 +481,14 @@ fixed.
 - **Refusal targets are templated** — twelve phrasings with the tool names
   substituted in, not human-written declines. BFCL's irrelevance check only asks
   whether a parseable call was emitted, so it cannot distinguish a model that
-  reasons about applicability from one that has learned a refusal register. That
-  distinction matters for the safety claim and is not measured here.
+  reasons about applicability from one that has learned a refusal register.
+  [The shortcut probe](#did-it-learn-judgement-or-a-lexical-shortcut) rules out
+  the crudest version of this (declining on vocabulary mismatch) but not the
+  middle ground, which no BFCL category covers.
+- **Coverage of the seed replication is uneven.** Ablation B has three seeds;
+  runs 1 and 2 have one each. The calls-only arm of the replication doubles as a
+  three-seed view of run 1's regression, but the *append* configuration —
+  the one the practical recommendation rests on — is still a single draw.
 - **Run 2 needed two memory-side settings run 1 did not** — `--pad-multiple 256`
   and no in-training eval — because run 1's configuration OOM'd five times on
   this card. Padding positions are masked out of the loss and gradients, and
@@ -501,6 +552,9 @@ fixed.
 # three-seed replication of ablation B (~6 h on one 8 GiB GPU)
 powershell -File scripts/run_multiseed.ps1
 .venv-bfcl/Scripts/python  scripts/06_multiseed_report.py
+
+# shortcut probe -- pure analysis over outputs that already exist
+.venv-bfcl/Scripts/python  scripts/07_shortcut_probe.py
 ```
 
 `--eval-strategy no --pad-multiple 256` are there for the 8 GiB card, not for the
