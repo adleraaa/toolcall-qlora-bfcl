@@ -10,9 +10,11 @@ test, and the training cost reported alongside the win.
 points of the model's ability to *decline* — a net **−7.10%**. Mixing in 1,200
 constructed refusals recovers ~49 of those points, reproduced across three seeds
 (+105/−1, +115/−1, +133/−1) with **no detectable cost to tool calling**, ending
-at **+4.92%** over base. A volume-controlled ablation shows the safety recovery
-is entirely the refusal data and the capability gain is entirely the data volume
-— the two are orthogonal, so refusals should be **appended, not substituted**.
+at **+4.1% over base on average** (+4.92 / +4.35 / +3.06 by seed). A
+volume-controlled ablation shows the safety recovery is entirely the refusal
+data and the capability gain is entirely the data volume — the two are
+orthogonal, so refusals should be **appended, not substituted** (3/3 seeds
+favour appending, mean 2.42 points).
 
 > Every number below is produced by `05_report.py` from `results/`; none is
 > hand-typed. Paired bootstrap CIs, McNemar exact tests, per-item outcomes in
@@ -306,10 +308,11 @@ Refusal data buys declining behaviour; call data buys calling behaviour; neither
 substitutes for the other.
 
 **Practical consequence: append refusals, do not substitute them.** Both fixes
-recover the safety regression equally. Only the additive one also keeps the
-capability win — +4.92% over base and significant, against +1.21% at p=0.34 for
-the replacement, which is statistically indistinguishable from not fine-tuning
-at all.
+recover the safety regression equally; only the additive one also keeps the
+capability win. Replicated at three seeds, appending beats replacing on OVERALL
+by **1.13 / 2.42 / 3.71 points — 3/3 in the same direction, 2/3 significant,
+mean 2.42**. The direction holds everywhere; the magnitude is roughly half what
+the first seed alone suggested.
 
 `format_compliance.json` shows the mechanism reversing cleanly. Parseable calls
 emitted on irrelevance prompts: base **26.25%**, run 1 **81.67%**, run 2
@@ -363,6 +366,10 @@ seed-to-seed spread by roughly four fifths. A model trained only on successful
 calls sits right on the call/decline boundary and lands anywhere in a 15-point
 window depending on nothing but the seed. Adding refusals moves it off that
 boundary and holds it there.
+
+The append arm is steadier still on OVERALL — 78.55 / 77.98 / 76.69 — against
+64.19–67.42 for calls-only. Refusal data narrows the spread in both mixing
+strategies.
 
 Two consequences for how the headline numbers should be read:
 
@@ -485,10 +492,12 @@ fixed.
   [The shortcut probe](#did-it-learn-judgement-or-a-lexical-shortcut) rules out
   the crudest version of this (declining on vocabulary mismatch) but not the
   middle ground, which no BFCL category covers.
-- **Coverage of the seed replication is uneven.** Ablation B has three seeds;
-  runs 1 and 2 have one each. The calls-only arm of the replication doubles as a
-  three-seed view of run 1's regression, but the *append* configuration —
-  the one the practical recommendation rests on — is still a single draw.
+- **The first seed flattered every effect.** Seed 20260809 produced the largest
+  magnitude in each analysis it appears in: the append-vs-replace gap (3.71 vs a
+  3-seed mean of 2.42), the apparent alignment tax (a uniform negative that half
+  the seeds reverse), and the gain over base (+4.92 vs a mean of +4.11). Every
+  headline number in the first version of this README came from it. Directions
+  survived replication; magnitudes shrank.
 - **Run 2 needed two memory-side settings run 1 did not** — `--pad-multiple 256`
   and no in-training eval — because run 1's configuration OOM'd five times on
   this card. Padding positions are masked out of the loss and gradients, and
@@ -549,8 +558,9 @@ fixed.
 
 .venv-bfcl/Scripts/python  scripts/05_report.py
 
-# three-seed replication of ablation B (~6 h on one 8 GiB GPU)
+# three-seed replication: ablation B (~6 h), then the append arm (~2.8 h)
 powershell -File scripts/run_multiseed.ps1
+powershell -File scripts/run_append_seeds.ps1
 .venv-bfcl/Scripts/python  scripts/06_multiseed_report.py
 
 # shortcut probe -- pure analysis over outputs that already exist

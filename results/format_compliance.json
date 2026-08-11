@@ -241,5 +241,59 @@
       "parsed": 84,
       "parse_rate": 0.35
     }
+  },
+  "tuned_refusal_s20260810": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 400,
+      "parse_rate": 1.0
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 199,
+      "parse_rate": 0.995
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 57,
+      "parse_rate": 0.2375
+    }
+  },
+  "tuned_refusal_s20260811": {
+    "simple_python": {
+      "n": 400,
+      "parsed": 398,
+      "parse_rate": 0.995
+    },
+    "multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "parallel_multiple": {
+      "n": 200,
+      "parsed": 200,
+      "parse_rate": 1.0
+    },
+    "irrelevance": {
+      "n": 240,
+      "parsed": 66,
+      "parse_rate": 0.275
+    }
   }
 }

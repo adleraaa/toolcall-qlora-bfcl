@@ -40,6 +40,13 @@ ARM_B = {
     20260810: "tuned_fixed_s20260810",
     20260811: "tuned_fixed_s20260811",
 }
+# arm C = refusals APPENDED (6,116 rows). Present so the append-vs-replace
+# recommendation rests on three seeds per side rather than one.
+ARM_C = {
+    20260809: "tuned_refusal",
+    20260810: "tuned_refusal_s20260810",
+    20260811: "tuned_refusal_s20260811",
+}
 
 CALL_CATS = ["simple_python", "multiple", "parallel", "parallel_multiple"]
 
@@ -161,11 +168,46 @@ def main() -> int:
         config_check = compare("OVERALL", av_all, bv_all)
         print(format_row(config_check, labels=("orig_cfg", "new_cfg")))
 
+    # ---- append vs replace, across seeds -----------------------------------
+    # The project's practical recommendation lives or dies here, so it gets the
+    # same three-seed treatment rather than resting on one draw.
+    append_rows = None
+    pairs_c = {}
+    for seed in SEEDS:
+        c, b = load(ARM_C[seed]), load(ARM_B[seed])
+        if c is not None and b is not None:
+            pairs_c[seed] = (c, b)
+    if pairs_c:
+        print("\n" + "=" * 110)
+        print("APPEND vs REPLACE  (arm C -> arm B; both keep the same 1,200 refusals,")
+        print("  arm C additionally keeps the 1,200 calls that arm B dropped)")
+        print("=" * 110)
+        cats_c = sorted(next(iter(pairs_c.values()))[0])
+        per_seed_overall = []
+        for seed, (c, b) in sorted(pairs_c.items()):
+            av, bv = [], []
+            for cat in cats_c:
+                x, y = vectors(c, b, cat)
+                av.extend(x)
+                bv.extend(y)
+            row = compare(f"seed {seed}", av, bv)
+            per_seed_overall.append(row["delta"]["point"])
+            print(format_row(row, labels=("append", "replace")))
+        if len(per_seed_overall) > 1:
+            print(f"\nOVERALL delta across seeds: {summarise(per_seed_overall)}")
+            neg = sum(1 for v in per_seed_overall if v < 0)
+            print(f"  {neg}/{len(per_seed_overall)} favour APPEND "
+                  f"(negative = replace scores lower)")
+        append_rows = per_seed_overall
+    else:
+        print("\n(append arm not yet replicated -- run run_append_seeds.ps1)")
+
     out = {
         "seeds": sorted(arms),
         "per_category_deltas": per_cat,
         "pooled": pooled_rows,
         "config_check": config_check,
+        "append_vs_replace_overall_deltas": append_rows,
         "training": {
             d.parent.name: json.loads(d.read_text(encoding="utf-8"))
             for d in sorted(RUNS.glob("*/train_summary.json"))
