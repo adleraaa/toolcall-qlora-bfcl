@@ -911,9 +911,263 @@
           "p_value": 9.102659374333861e-06
         }
       }
+    ],
+    "base_bf16_vs_base": [
+      {
+        "category": "irrelevance",
+        "n": 240,
+        "baseline": {
+          "point": 0.6875,
+          "low": 0.626294,
+          "high": 0.742799
+        },
+        "tuned": {
+          "point": 0.7375,
+          "low": 0.678406,
+          "high": 0.789111
+        },
+        "delta": {
+          "point": 0.05,
+          "low": 0.016667,
+          "high": 0.083333
+        },
+        "mcnemar": {
+          "gained": 15,
+          "lost": 3,
+          "discordant": 18,
+          "p_value": 0.007537841796875
+        }
+      },
+      {
+        "category": "multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.845,
+          "low": 0.788393,
+          "high": 0.888604
+        },
+        "tuned": {
+          "point": 0.81,
+          "low": 0.749988,
+          "high": 0.858328
+        },
+        "delta": {
+          "point": -0.035,
+          "low": -0.08,
+          "high": 0.01
+        },
+        "mcnemar": {
+          "gained": 7,
+          "lost": 14,
+          "discordant": 21,
+          "p_value": 0.18924713134765625
+        }
+      },
+      {
+        "category": "parallel",
+        "n": 200,
+        "baseline": {
+          "point": 0.705,
+          "low": 0.638413,
+          "high": 0.763861
+        },
+        "tuned": {
+          "point": 0.64,
+          "low": 0.571415,
+          "high": 0.703308
+        },
+        "delta": {
+          "point": -0.065,
+          "low": -0.115,
+          "high": -0.015
+        },
+        "mcnemar": {
+          "gained": 8,
+          "lost": 21,
+          "discordant": 29,
+          "p_value": 0.0241195447742939
+        }
+      },
+      {
+        "category": "parallel_multiple",
+        "n": 200,
+        "baseline": {
+          "point": 0.64,
+          "low": 0.571415,
+          "high": 0.703308
+        },
+        "tuned": {
+          "point": 0.56,
+          "low": 0.490717,
+          "high": 0.627022
+        },
+        "delta": {
+          "point": -0.08,
+          "low": -0.13,
+          "high": -0.03
+        },
+        "mcnemar": {
+          "gained": 7,
+          "lost": 23,
+          "discordant": 30,
+          "p_value": 0.005222879350185394
+        }
+      },
+      {
+        "category": "simple_python",
+        "n": 400,
+        "baseline": {
+          "point": 0.8625,
+          "low": 0.825288,
+          "high": 0.892816
+        },
+        "tuned": {
+          "point": 0.835,
+          "low": 0.795472,
+          "high": 0.868155
+        },
+        "delta": {
+          "point": -0.0275,
+          "low": -0.0575,
+          "high": 0.0025
+        },
+        "mcnemar": {
+          "gained": 14,
+          "lost": 25,
+          "discordant": 39,
+          "p_value": 0.10812902140605729
+        }
+      },
+      {
+        "category": "OVERALL",
+        "n": 1240,
+        "baseline": {
+          "point": 0.764516,
+          "low": 0.740105,
+          "high": 0.787293
+        },
+        "tuned": {
+          "point": 0.73629,
+          "low": 0.711062,
+          "high": 0.760059
+        },
+        "delta": {
+          "point": -0.028226,
+          "low": -0.046774,
+          "high": -0.009677
+        },
+        "mcnemar": {
+          "gained": 51,
+          "lost": 86,
+          "discordant": 137,
+          "p_value": 0.0035199932874412656
+        }
+      }
     ]
   },
   "training_cost": {
+    "qwen2.5-1.5b-append-s20260810": {
+      "train_file": "train_mixed_s20260810.jsonl",
+      "train_composition": {
+        "refusal": 1200,
+        "call": 4920
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 6116,
+      "train_runtime_min": 71.56,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.07334709708986718,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-append-s20260811": {
+      "train_file": "train_mixed_s20260811.jsonl",
+      "train_composition": {
+        "call": 4920,
+        "refusal": 1200
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 6116,
+      "train_runtime_min": 65.94,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.07306130146668627,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-callsonly-s20260809": {
+      "train_file": "train.jsonl",
+      "train_composition": {
+        "call": 4920
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 4916,
+      "train_runtime_min": 51.51,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.05527792400945493,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-callsonly-s20260810": {
+      "train_file": "train.jsonl",
+      "train_composition": {
+        "call": 4920
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 4916,
+      "train_runtime_min": 47.59,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.05462573160970114,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-callsonly-s20260811": {
+      "train_file": "train.jsonl",
+      "train_composition": {
+        "call": 4920
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 4916,
+      "train_runtime_min": 50.05,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.05512524656648558,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-fixed-s20260810": {
+      "train_file": "train_fixed_s20260810.jsonl",
+      "train_composition": {
+        "refusal": 1200,
+        "call": 3720
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 4918,
+      "train_runtime_min": 47.43,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.0799400882992318,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
+    "qwen2.5-1.5b-fixed-s20260811": {
+      "train_file": "train_fixed_s20260811.jsonl",
+      "train_composition": {
+        "call": 3720,
+        "refusal": 1200
+      },
+      "pad_multiple": 256,
+      "eval_strategy": "no",
+      "train_rows": 4916,
+      "train_runtime_min": 49.42,
+      "peak_vram_gib": 5.94,
+      "final_train_loss": 0.0818396014411275,
+      "lora_r": 16,
+      "base_model": "Qwen/Qwen2.5-1.5B-Instruct"
+    },
     "qwen2.5-1.5b-toolace-fixed-qlora": {
       "train_file": "train_fixed.jsonl",
       "train_composition": {

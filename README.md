@@ -188,6 +188,7 @@ Three models, identical prompts, greedy decoding, the same 1,240 BFCL tasks
 scored by BFCL's own checker:
 
 - **base** — `Qwen2.5-1.5B-Instruct` in NF4, no adapter
+- **base_bf16** — the same weights unquantised, to price the quantisation itself
 - **tuned** — LoRA on 4,916 ToolACE examples, every target a tool call
 - **tuned_refusal** — those same examples **plus** 1,200 refusals (6,116 rows)
 - **tuned_fixed** — 1,200 calls **replaced** by those refusals (4,917 rows)
@@ -383,6 +384,72 @@ Two consequences for how the headline numbers should be read:
   (+7.08%), moved by less than half that arm's own seed-to-seed range, so it is
   not separable from noise.
 
+### What does the 4-bit quantisation itself cost?
+
+Every comparison above runs NF4 on both sides, which *controls* quantisation
+away. This one measures it: same weights, same prompts, same greedy decode,
+same batch size — only the numeric format moves.
+
+| category | bf16 | NF4 | delta (95% CI) | gained/lost | McNemar p |
+|---|---|---|---|---|---|
+| parallel_multiple | 64.00% | 56.00% | **−8.00%** [−13.00, −3.00] | +7/−23 | 0.0052 |
+| parallel | 70.50% | 64.00% | **−6.50%** [−11.50, −1.50] | +8/−21 | 0.024 |
+| multiple | 84.50% | 81.00% | −3.50% [−8.00, +1.00] | +7/−14 | 0.19 |
+| simple_python | 86.25% | 83.50% | −2.75% [−5.75, +0.25] | +14/−25 | 0.11 |
+| irrelevance | 68.75% | 73.75% | **+5.00%** [+1.67, +8.33] | +15/−3 | 0.0075 |
+| **OVERALL** | **76.45%** | **73.63%** | **−2.82%** [−4.68, −0.97] | +51/−86 | 0.0035 |
+
+**The cost is real but concentrated, and one category moves the other way.**
+4-bit costs ~2.8 points overall, but the damage is not spread evenly: the two
+categories that require composing *several* calls in one response lose 6.5 and
+8.0 points, while the single-call categories lose an amount this benchmark
+cannot separate from zero. Difficulty and quantisation sensitivity track each
+other.
+
+`irrelevance` gains 5 points from being quantised, which sounds like quantisation
+improving safety. It is not. The parse rates show one mechanism with two signs:
+
+| category | parse rate, bf16 | parse rate, NF4 |
+|---|---|---|
+| simple_python | 99.50% | 98.50% |
+| multiple | 100.00% | 99.00% |
+| parallel | 98.00% | 96.00% |
+| parallel_multiple | 96.00% | 95.50% |
+| irrelevance | 31.25% | 26.25% |
+
+NF4 emits a parseable call *less often in every single category*. Where calling
+is correct that is a loss; on `irrelevance`, where declining is correct, the same
+weakened impulse scores as a gain. A quantised model is not more principled about
+declining — it is just less able to produce a call, and one category happens to
+reward that.
+
+Note the magnitudes, though: `parallel_multiple` loses 8.0 accuracy points while
+its parse rate drops only 0.5. So the dominant failure is **not** malformed
+output — it is well-formed calls with the wrong function or wrong arguments.
+Quantisation degrades selection and argument binding considerably more than it
+degrades format compliance, and a format-compliance metric alone would have
+missed almost all of it.
+
+**Limits of this arm, stated plainly.**
+
+- **Only the untuned model has a full-precision arm.** The tuned model's bf16 run
+  did not finish: bf16 weights plus a LoRA adapter plus the KV cache for the
+  longer prompt categories exceeds 8 GiB, and the run degraded from 1.37 it/s to
+  0.52 it/s and then died — the same WDDM host-memory spill documented above.
+  Lowering the batch size would have fit, and that is exactly what makes it
+  unusable; see below.
+- **Batch size changes greedy outputs, so it cannot be varied between arms.**
+  Re-running 40 `irrelevance` prompts at batch 1 instead of batch 4 changed 4 of
+  them — including a flip from `[math.sum(...)]` to *"None of the provided
+  functions can solve a quadratic equation"*, i.e. from wrong to right. Padding
+  differences inside a batch perturb the logits enough to cross the
+  call/decline boundary. Every arm in this project therefore uses batch 4, and
+  the tuned bf16 comparison is left undone rather than run at a batch size that
+  would have made it incomparable.
+
+That last point generalises past this project: on a benchmark with a decision
+boundary, batch size is not a performance knob, it is an experimental variable.
+
 ### Did it learn judgement, or a lexical shortcut?
 
 The refusal builder only accepts a cross-paired example when the offered tool
@@ -485,6 +552,9 @@ fixed.
 - **Run 3 removes the volume confound but not every difference.** It has 150
   fewer optimizer steps than run 2 and a higher refusal share (24.4% vs 19.6%),
   since holding rows fixed necessarily changes the ratio.
+- **The quantisation arm covers the untuned model only**, and at one batch size.
+  See that section for why the tuned bf16 run was abandoned rather than run at a
+  smaller batch.
 - **Refusal targets are templated** — twelve phrasings with the tool names
   substituted in, not human-written declines. BFCL's irrelevance check only asks
   whether a parseable call was emitted, so it cannot distinguish a model that
@@ -565,6 +635,9 @@ powershell -File scripts/run_append_seeds.ps1
 
 # shortcut probe -- pure analysis over outputs that already exist
 .venv-bfcl/Scripts/python  scripts/07_shortcut_probe.py
+
+# quantized vs full-precision (~12 min for the baseline arm)
+powershell -File scripts/run_precision.ps1
 ```
 
 `--eval-strategy no --pad-multiple 256` are there for the 8 GiB card, not for the

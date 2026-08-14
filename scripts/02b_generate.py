@@ -33,13 +33,19 @@ def main() -> int:
     # anything else must supply --adapter explicitly.
     ap.add_argument("--model", required=True, help="output tag under results/")
     ap.add_argument("--adapter", default="", help="adapter dir; overrides ADAPTERS lookup")
+    # Every run so far has been NF4 on both sides, which controls quantisation
+    # away. Running the same weights in bf16 measures it instead.
+    ap.add_argument("--precision", default="nf4", choices=["nf4", "bf16"])
     ap.add_argument("--batch-size", type=int, default=4)
     ap.add_argument("--max-new-tokens", type=int, default=384)
     ap.add_argument("--limit", type=int, default=0, help="per-category cap, for smoke tests")
     ap.add_argument("--categories", default="")
     args = ap.parse_args()
 
-    if args.model == "base":
+    # `base` and any `base_*` variant (e.g. base_bf16) run without an adapter.
+    # Anything else must resolve to one, so a mistyped tag fails loudly instead
+    # of silently regenerating the baseline under a new name.
+    if args.model == "base" or args.model.startswith("base_"):
         adapter = None
     elif args.adapter:
         adapter = Path(args.adapter)
@@ -60,7 +66,7 @@ def main() -> int:
     if not files:
         raise SystemExit("no prompt files -- run 02a_build_prompts.py first")
 
-    model, tok = load(str(adapter) if adapter else None)
+    model, tok = load(str(adapter) if adapter else None, precision=args.precision)
     out_dir = RESULTS / args.model
     out_dir.mkdir(parents=True, exist_ok=True)
 

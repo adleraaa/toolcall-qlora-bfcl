@@ -31,6 +31,11 @@ COMPARISONS = [
     # is what those rows contain.
     ("tuned", "tuned_fixed", "Ablation B - composition only, total rows held fixed"),
     ("tuned_refusal", "tuned_fixed", "Does the extra 24% of call data matter?"),
+    # Quantisation, measured rather than controlled away. Same weights, same
+    # prompts, same greedy decode; only the numeric format moves.
+    ("base_bf16", "base", "Quantisation cost on the untuned model (bf16 -> NF4)"),
+    ("tuned_refusal_bf16", "tuned_refusal",
+     "Quantisation cost on the tuned model (bf16 -> NF4, adapter trained on NF4)"),
 ]
 
 
@@ -85,7 +90,9 @@ def md_table(rows: list[dict], left: str, right: str) -> list[str]:
 
 
 def main() -> int:
-    scored = {name: load(name) for name in ("base", "tuned", "tuned_refusal", "tuned_fixed")}
+    scored = {name: load(name) for name in
+              ("base", "tuned", "tuned_refusal", "tuned_fixed",
+               "base_bf16", "tuned_refusal_bf16")}
     available = [k for k, v in scored.items() if v is not None]
     print(f"scored models available: {available}")
     for name, data in scored.items():

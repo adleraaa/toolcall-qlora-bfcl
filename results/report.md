@@ -64,10 +64,28 @@
 | simple_python | 400 | 87.50% | 83.50% | -4.00% [-6.50%, -1.75%] | +3/-19 | 0.000855 |
 | **OVERALL** | 1240 | 78.55% | 74.84% | -3.71% [-5.40%, -2.10%] | +30/-76 | 9.1e-06 |
 
+### Quantisation cost on the untuned model (bf16 -> NF4)
+
+| category | n | base_bf16 | base | delta (95% CI) | gained/lost | McNemar p |
+|---|---|---|---|---|---|---|
+| irrelevance | 240 | 68.75% | 73.75% | +5.00% [+1.67%, +8.33%] | +15/-3 | 0.00754 |
+| multiple | 200 | 84.50% | 81.00% | -3.50% [-8.00%, +1.00%] | +7/-14 | 0.189 |
+| parallel | 200 | 70.50% | 64.00% | -6.50% [-11.50%, -1.50%] | +8/-21 | 0.0241 |
+| parallel_multiple | 200 | 64.00% | 56.00% | -8.00% [-13.00%, -3.00%] | +7/-23 | 0.00522 |
+| simple_python | 400 | 86.25% | 83.50% | -2.75% [-5.75%, +0.25%] | +14/-25 | 0.108 |
+| **OVERALL** | 1240 | 76.45% | 73.63% | -2.82% [-4.68%, -0.97%] | +51/-86 | 0.00352 |
+
 ### Training cost
 
 | run | rows | composition | min | peak VRAM |
 |---|---|---|---|---|
+| qwen2.5-1.5b-append-s20260810 | 6,116 | call=4,920, refusal=1,200 | 71.56 | 5.94 GiB |
+| qwen2.5-1.5b-append-s20260811 | 6,116 | call=4,920, refusal=1,200 | 65.94 | 5.94 GiB |
+| qwen2.5-1.5b-callsonly-s20260809 | 4,916 | call=4,920 | 51.51 | 5.94 GiB |
+| qwen2.5-1.5b-callsonly-s20260810 | 4,916 | call=4,920 | 47.59 | 5.94 GiB |
+| qwen2.5-1.5b-callsonly-s20260811 | 4,916 | call=4,920 | 50.05 | 5.94 GiB |
+| qwen2.5-1.5b-fixed-s20260810 | 4,918 | call=3,720, refusal=1,200 | 47.43 | 5.94 GiB |
+| qwen2.5-1.5b-fixed-s20260811 | 4,916 | call=3,720, refusal=1,200 | 49.42 | 5.94 GiB |
 | qwen2.5-1.5b-toolace-fixed-qlora | 4,917 | call=3,720, refusal=1,200 | 46.47 | 5.94 GiB |
 | qwen2.5-1.5b-toolace-qlora | 4,916 | calls only | 54.25 | 5.91 GiB |
 | qwen2.5-1.5b-toolace-refusal-qlora | 6,116 | call=4,920, refusal=1,200 | 81.97 | 5.94 GiB |

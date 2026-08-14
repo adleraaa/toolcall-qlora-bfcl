@@ -2,11 +2,17 @@
 
 Kept separate from BFCL specifics so the model side can be tested on its own.
 
-The base model is loaded in NF4 rather than bf16 on purpose. The tuned model is a
-LoRA adapter over an NF4 base, so scoring the baseline in full precision would
-confound the comparison: part of any measured delta would just be the difference
-between a quantised and an unquantised model. Both sides run 4-bit; the only
-thing that changes between them is the adapter.
+The base model is loaded in NF4 rather than bf16 by default, on purpose. The
+tuned model is a LoRA adapter over an NF4 base, so scoring the baseline in full
+precision would confound the comparison: part of any measured delta would just be
+the difference between a quantised and an unquantised model. Both sides run
+4-bit; the only thing that changes between them is the adapter.
+
+`precision="bf16"` exists to measure that confound directly rather than only to
+control it away. Holding the weights and the decode fixed and moving only the
+numeric format turns "we controlled for quantisation" into "here is what
+quantisation actually costs, per category" -- which is the comparison the
+default deliberately avoids making.
 """
 
 from __future__ import annotations
@@ -22,26 +28,34 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 BASE_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
 
 
-def load(adapter_dir: str | None = None):
-    """Load the base model in NF4, optionally with a LoRA adapter attached."""
+def load(adapter_dir: str | None = None, precision: str = "nf4"):
+    """Load the base model, optionally with a LoRA adapter attached.
+
+    precision="nf4"  -> 4-bit NF4 with double quantisation, bf16 compute
+    precision="bf16" -> unquantised bf16 weights
+
+    Everything else -- weights, tokenizer, attention implementation, decode --
+    is identical between the two, so a score difference is attributable to the
+    numeric format alone.
+    """
+    if precision not in ("nf4", "bf16"):
+        raise ValueError(f"unknown precision {precision!r}; expected 'nf4' or 'bf16'")
+
     tok = AutoTokenizer.from_pretrained(BASE_MODEL)
     tok.padding_side = "left"  # required for correct batched generation
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
 
-    quant = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=torch.bfloat16,
-    )
-    model = AutoModelForCausalLM.from_pretrained(
-        BASE_MODEL,
-        quantization_config=quant,
-        dtype=torch.bfloat16,
-        device_map={"": 0},
-        attn_implementation="sdpa",
-    )
+    kwargs = dict(dtype=torch.bfloat16, device_map={"": 0}, attn_implementation="sdpa")
+    if precision == "nf4":
+        kwargs["quantization_config"] = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_compute_dtype=torch.bfloat16,
+        )
+    model = AutoModelForCausalLM.from_pretrained(BASE_MODEL, **kwargs)
+    print(f"precision: {precision}")
 
     if adapter_dir:
         from peft import PeftModel
