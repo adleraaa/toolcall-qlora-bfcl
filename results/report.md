@@ -20,7 +20,7 @@
 | simple_python | 400 | 83.50% | 87.50% | +4.00% [+0.75%, +7.25%] | +32/-16 | 0.0293 |
 | **OVERALL** | 1240 | 73.63% | 78.55% | +4.92% [+2.66%, +7.18%] | +135/-74 | 2.94e-05 |
 
-### Run 3 - 1,200 calls REPLACED by refusals (4,920 rows)
+### Run 3 - 1,200 calls REPLACED by refusals (4,917 rows)
 
 | category | n | base | tuned_fixed | delta (95% CI) | gained/lost | McNemar p |
 |---|---|---|---|---|---|---|

@@ -1,6 +1,6 @@
 """QLoRA SFT of Qwen2.5-1.5B-Instruct for tool calling, on one 8 GiB laptop GPU.
 
-Stack is deliberately plain: transformers + peft + bitsandbytes + trl. Unsloth is
+Stack is deliberately plain: transformers + peft + bitsandbytes. Unsloth is
 faster and lighter, but it is a wrapper with its own kernel patches; on a
 Blackwell/Windows box the plain stack has fewer moving parts to debug, and 1.5B
 in NF4 fits with room to spare.

@@ -60,7 +60,7 @@ cluster.
 | Base model | `Qwen2.5-1.5B-Instruct` (ungated) |
 | Training data | [ToolACE](https://huggingface.co/datasets/Team-ACE/ToolACE), Apache-2.0, ungated |
 | Method | QLoRA — NF4, double quant, bf16 compute, LoRA r=16 on all attention + MLP projections |
-| Framework | PyTorch + transformers + peft + bitsandbytes + trl |
+| Framework | PyTorch + transformers + peft + bitsandbytes |
 | Benchmark | BFCL, scored with the official `bfcl evaluate` |
 | Hardware | RTX 5070 Laptop (Blackwell sm_120), 8 GiB VRAM |
 
@@ -300,6 +300,7 @@ refusals, 1,200 fewer calls):
 | simple_python | **−4.00%** | 0.00086 |
 | parallel | **−5.50%** | 0.013 |
 | multiple | **−4.50%** | 0.022 |
+| parallel_multiple | −5.50% | 0.117 |
 | irrelevance | +0.42% | **1.0** |
 | **OVERALL** | **−3.71%** | 9.1e−06 |
 
@@ -342,11 +343,11 @@ Per-seed McNemar on irrelevance: **+105/−1, +115/−1, +133/−1**. Pooled acr
 seeds it is +353/−3 at n=720.
 
 **There is no detectable alignment tax.** Across the four call categories and
-three seeds, the twelve deltas split **6 positive / 6 negative**, mean +0.96%.
-The uniformly-negative pattern that one seed showed does not survive
-replication — half of it changes sign. Swapping 1,200 calls for 1,200 refusals
-leaves call-category performance unchanged within noise, and buys ~49 points of
-declining behaviour.
+three seeds, the twelve deltas split **5 positive, 6 negative, and one exactly
+zero**, mean +0.96%. The uniformly-negative pattern that one seed showed does
+not survive replication: on other seeds five of those twelve land positive.
+Swapping 1,200 calls for 1,200 refusals leaves call-category performance
+unchanged within noise, and buys ~49 points of declining behaviour.
 
 This is the second correction on this point. The first ablation suggested
 refusals *improve* tool calling (wrong — that was data volume); the
@@ -574,11 +575,6 @@ fixed.
   eval runs under `no_grad`, so neither changes the learned weights; but the
   configurations were not byte-identical and pretending otherwise would be
   dishonest.
-- **Refusal targets are templated.** Twelve phrasings with the tool names
-  interpolated, not natural human refusals. The model may have learned the
-  template as much as the judgement, and BFCL's irrelevance check only asks
-  whether a parseable call was emitted — it cannot tell a well-reasoned decline
-  from a canned one.
 - **Refusal pairs are heuristically labelled.** A pair is kept when the request's
   required functions are absent from the offered tools *and* the two share no
   name tokens. That is conservative but not a semantic guarantee; a genuinely

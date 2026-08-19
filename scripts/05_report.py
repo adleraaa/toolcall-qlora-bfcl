@@ -25,7 +25,7 @@ RUNS = Path(r"D:\ToolCallFT\runs")
 COMPARISONS = [
     ("base", "tuned", "Run 1 - ToolACE as shipped (every target is a tool call)"),
     ("base", "tuned_refusal", "Run 2 - ToolACE + 1,200 constructed refusals (6,116 rows)"),
-    ("base", "tuned_fixed", "Run 3 - 1,200 calls REPLACED by refusals (4,920 rows)"),
+    ("base", "tuned_fixed", "Run 3 - 1,200 calls REPLACED by refusals (4,917 rows)"),
     ("tuned", "tuned_refusal", "Ablation A - adding refusals (confounded with +24% data)"),
     # The clean one: identical row count to run 1, so the only thing that moved
     # is what those rows contain.
