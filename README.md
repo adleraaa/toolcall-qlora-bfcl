@@ -61,7 +61,7 @@ cluster.
 | Training data | [ToolACE](https://huggingface.co/datasets/Team-ACE/ToolACE), Apache-2.0, ungated |
 | Method | QLoRA — NF4, double quant, bf16 compute, LoRA r=16 on all attention + MLP projections |
 | Framework | PyTorch + transformers + peft + bitsandbytes |
-| Benchmark | BFCL, scored with the official `bfcl evaluate` |
+| Benchmark | BFCL v4 — scored with `bfcl_eval`'s official `ast_checker`, imported directly rather than via the `bfcl evaluate` CLI (vLLM has no Windows build). `irrelevance` is scored by this repo's own rule: correct iff the model emits nothing parseable. |
 | Hardware | RTX 5070 Laptop (Blackwell sm_120), 8 GiB VRAM |
 
 ToolACE was chosen over the more common xLAM-60k for two reasons: xLAM is gated
@@ -527,8 +527,8 @@ mechanism wrong.
 | run | rows | composition | steps | wall-clock | peak VRAM | final loss |
 |---|---|---|---|---|---|---|
 | tuned | 4,916 | calls only | 615 | 54.3 min | 5.91 GiB | 0.0558 |
-| tuned_refusal | 6,116 | 4,920 calls + 1,200 refusals | 765 | 82.0 min | 5.94 GiB | 0.0751 |
-| tuned_fixed | 4,917 | 3,720 calls + 1,200 refusals | 615 | 46.5 min | 5.94 GiB | 0.0800 |
+| tuned_refusal | 6,116 | 4,920 calls + 1,200 refusals raw, 4 over max_len dropped | 765 | 82.0 min | 5.94 GiB | 0.0751 |
+| tuned_fixed | 4,917 | 3,720 calls + 1,200 refusals raw, 3 over max_len dropped | 615 | 46.5 min | 5.94 GiB | 0.0800 |
 
 One RTX 5070 Laptop (8 GiB), LoRA r=16, one epoch each, ~70 MB adapter each.
 
@@ -546,10 +546,11 @@ fixed.
   (+0/−133 down, then +120/−0, +121/−0, +105/−1, +115/−1, +133/−1 back up). The
   ±1–4.5% call-side numbers from the single-seed runs are not reproduced and
   should be read as noise.
-- **"No detectable tax" is not "no tax".** Twelve deltas splitting 6/6 with mean
-  +0.96% rules out an effect large enough for this setup to see; at n=200 per
-  category per seed, a true cost of ~1% would still be invisible. Three seeds
-  bound it, they do not eliminate it.
+- **"No detectable tax" is not "no tax".** Twelve deltas splitting 5 positive,
+  6 negative and one exactly zero, with mean +0.96%, rules out an effect large
+  enough for this setup to see; at n=200 per category per seed for three of the
+  four call categories (`simple_python` is n=400), a true cost of ~1% would
+  still be invisible. Three seeds bound it, they do not eliminate it.
 - **Run 3 removes the volume confound but not every difference.** It has 150
   fewer optimizer steps than run 2 and a higher refusal share (24.4% vs 19.6%),
   since holding rows fixed necessarily changes the ratio.
