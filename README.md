@@ -7,7 +7,8 @@ scored locally with `bfcl_eval`'s `ast_checker` (`irrelevance` by this repo's
 own rule) — with paired confidence intervals, a significance test, and the
 training cost reported alongside the win.
 
-**Headline:** the obvious fine-tune gained +8.5% on tool calling and lost 55
+**Headline:** the obvious fine-tune gained +8.5 and +8.0 points on two call
+categories (+4.5 points across all 1,000 call tasks) and lost 55
 points of the model's ability to *decline* — a net **−7.10%**. Replacing 1,200
 of its call examples with 1,200 constructed refusals recovers **~49 of those
 points** on average over three seeds (irrelevance McNemar against the
@@ -193,7 +194,8 @@ never be allowed to renegotiate the torch build verified on this GPU.
 ## Results
 
 Three models, identical prompts, greedy decoding, the same 1,240 BFCL tasks
-scored by BFCL's own checker:
+(1,000 call tasks scored by BFCL's own AST checker; the 240 `irrelevance`
+tasks by this repo's rule):
 
 - **base** — `Qwen2.5-1.5B-Instruct` in NF4, no adapter
 - **base_bf16** — the same weights unquantised, to price the quantisation itself
