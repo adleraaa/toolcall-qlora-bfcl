@@ -651,14 +651,6 @@ powershell -File scripts/run_precision.ps1
 experiment; see [Fitting it in 8 GiB](#fitting-it-in-8-gib-a-fragmentation-story).
 Neither changes what the model learns.
 
-## How this was built
-
-Built with [Claude Code](https://claude.com/claude-code), an AI coding agent.
-All of the 6 commits dated August 11–20, 2026 (US Pacific time) carry a
-Co-Authored-By: Claude trailer. Training and the eval generations ran on a
-single 8 GiB laptop GPU (RTX 5070). The README edits made on 2026-10-22,
-including this section, were also made with Claude Code.
-
 ## Licences
 
 Code Apache-2.0. ToolACE is Apache-2.0. Qwen2.5-1.5B-Instruct is under its own
