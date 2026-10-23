@@ -1,20 +1,24 @@
 # Tool-Calling QLoRA: does fine-tuning a 1.5B model actually help on BFCL?
 
 Fine-tunes `Qwen2.5-1.5B-Instruct` for function calling with QLoRA on a single
-8 GiB laptop GPU, and measures whether it helped on the
-[Berkeley Function Calling Leaderboard](https://gorilla.cs.berkeley.edu/leaderboard.html)
-using BFCL's own evaluator — with paired confidence intervals, a significance
-test, and the training cost reported alongside the win.
+8 GiB laptop GPU, and measures whether it helped on BFCL v4 tasks from the
+[Berkeley Function Calling Leaderboard](https://gorilla.cs.berkeley.edu/leaderboard.html),
+scored locally with `bfcl_eval`'s `ast_checker` (`irrelevance` by this repo's
+own rule) — with paired confidence intervals, a significance test, and the
+training cost reported alongside the win.
 
 **Headline:** the obvious fine-tune gained +8.5% on tool calling and lost 55
-points of the model's ability to *decline* — a net **−7.10%**. Mixing in 1,200
-constructed refusals recovers ~49 of those points, reproduced across three seeds
-(+105/−1, +115/−1, +133/−1) with **no detectable cost to tool calling**, ending
-at **+4.1% over base on average** (+4.92 / +4.35 / +3.06 by seed). A
-volume-controlled ablation shows the safety recovery is entirely the refusal
-data and the capability gain is entirely the data volume — the two are
-orthogonal, so refusals should be **appended, not substituted** (3/3 seeds
-favour appending, mean 2.42 points).
+points of the model's ability to *decline* — a net **−7.10%**. Replacing 1,200
+of its call examples with 1,200 constructed refusals recovers **~49 of those
+points** on average over three seeds (irrelevance McNemar against the
+calls-only fine-tune: +105/−1, +115/−1, +133/−1), and the four call categories
+stay within noise of the calls-only fine-tune; irrelevance still ends 5–9
+points below base. Appending the same refusals instead, with no call examples
+removed, ends at **+4.1 points over base overall on average** (+4.92 / +4.35
+/ +3.06 by seed). A volume-controlled ablation shows the safety recovery is
+entirely the refusal data and the capability gain is entirely the data volume
+— the two are orthogonal, so refusals should be **appended, not substituted**
+(3/3 seeds favour appending, mean 2.42 points).
 
 > Every number below is produced by `05_report.py` from `results/`; none is
 > hand-typed. Paired bootstrap CIs, McNemar exact tests, per-item outcomes in
@@ -106,7 +110,7 @@ Three hypotheses were tested and killed by evidence:
    measuring token lengths — the refusals came out *shorter* (p99 1,250 vs 1,443
    for calls), the mixed set's distribution matched run 1's almost exactly, and
    the rows around the crash topped out at 1,617 tokens.
-3. **My own "fix" was the problem.** `empty_cache()` every 25 steps made reserved
+3. **The earlier "fix" was the problem.** `empty_cache()` every 25 steps made reserved
    memory sawtooth in lockstep with the callback, so it looked causal. Killed by
    removing it: reserved then climbed *monotonically* instead — 14.0 → 16.9 →
    19.8 GiB — and the run still died at 193.
@@ -647,11 +651,11 @@ Neither changes what the model learns.
 
 ## How this was built
 
-Developed in August 2026 with Claude Code (an AI coding agent) as a pair
-programmer; the commits are dated 2026-08-11 to 2026-08-20, and 6 of 6 commits
-carry a Co-Authored-By trailer. Training and the eval generations ran on a
-single 8 GiB laptop GPU (RTX 5070). This section was added on 2026-10-22, also
-with Claude Code.
+Built with [Claude Code](https://claude.com/claude-code), an AI coding agent.
+All of the 6 commits dated August 11–20, 2026 (US Pacific time) carry a
+Co-Authored-By: Claude trailer. Training and the eval generations ran on a
+single 8 GiB laptop GPU (RTX 5070). The README edits made on 2026-10-22,
+including this section, were also made with Claude Code.
 
 ## Licences
 
