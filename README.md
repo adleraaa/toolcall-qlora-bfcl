@@ -15,7 +15,7 @@ calls-only fine-tune: +105/−1, +115/−1, +133/−1), and the four call catego
 stay within noise of the calls-only fine-tune; irrelevance still ends 5–9
 points below base. Appending the same refusals instead, with no call examples
 removed, ends at **+4.1 points over base overall on average** (+4.92 / +4.35
-/ +3.06 by seed). A volume-controlled ablation shows the safety recovery is
+/ +3.06 by seed). A volume-controlled ablation shows the irrelevance recovery is
 entirely the refusal data and the capability gain is entirely the data volume
 — the two are orthogonal, so refusals should be **appended, not substituted**
 (3/3 seeds favour appending, mean 2.42 points).
