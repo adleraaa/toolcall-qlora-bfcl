@@ -81,8 +81,12 @@ bitsandbytes wheels that QLoRA depends on.
 
 vLLM has no native Windows support, which rules out BFCL's usual generation
 backend. BFCL splits `generate` from `evaluate`, so generation runs locally
-through transformers and the resulting response files are scored by the official
-evaluator — the scores stay comparable to the public leaderboard.
+through transformers, with the models loaded in NF4 4-bit (bf16 only in the
+quantisation comparison below), and the resulting response files are scored
+with `bfcl_eval`'s `ast_checker`; `irrelevance` is scored by this repo's own
+rule (see **Stack**). These numbers come from this local setup, not from a
+leaderboard submission, so do not compare them directly with the public
+leaderboard.
 
 ### Fitting it in 8 GiB: a fragmentation story
 
@@ -640,6 +644,14 @@ powershell -File scripts/run_precision.ps1
 `--eval-strategy no --pad-multiple 256` are there for the 8 GiB card, not for the
 experiment; see [Fitting it in 8 GiB](#fitting-it-in-8-gib-a-fragmentation-story).
 Neither changes what the model learns.
+
+## How this was built
+
+Developed in August 2026 with Claude Code (an AI coding agent) as a pair
+programmer; the commits are dated 2026-08-11 to 2026-08-20, and 6 of 6 commits
+carry a Co-Authored-By trailer. Training and the eval generations ran on a
+single 8 GiB laptop GPU (RTX 5070). This section was added on 2026-10-22, also
+with Claude Code.
 
 ## Licences
 
